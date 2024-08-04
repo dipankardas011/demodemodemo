@@ -5,7 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set enviroment
+        shell: bash
+        run: |
+          echo "sha_short=$(git rev-parse "$GITHUB_SHA")" >> "$GITHUB_ENV"
       - uses: actions/github-script@v7
+        env:
+          SHA: ${{ env.sha_short }}
         with:
           script: |
             await github.rest.issues.createComment({
@@ -13,6 +19,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `**Welcome**, new contributor!
-            you can now use this '${{env.GITHUB_SHA}}' for ghcr images
+            you can now use this "${SHA}" for ghcr images
                 Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
             })
