@@ -12,6 +12,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `**Welcome**, new contributor!
-
+            you can now use this '${{GITHUB_SHA}}' for ghcr images
                 Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
             })
