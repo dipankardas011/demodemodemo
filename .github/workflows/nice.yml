@@ -4,9 +4,15 @@ jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Set enviroment
+        shell: bash
+        run: |
+          git show-ref --head
+          echo "sha_short=$(git rev-parse head)" >> "$GITHUB_ENV"
       - uses: actions/github-script@v7
         env:
-          SHA: ${{ github.head_ref }}
+          SHA: ${{ env.sha_short }}
         with:
           script: |
             const {SHA} = process.env;
