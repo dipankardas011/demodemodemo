@@ -1,3 +1,3 @@
-module github.com/dipankardas011/demo-demo
+module github.com/dipankardas011/demodemodemo
 
 go 1.22.5
