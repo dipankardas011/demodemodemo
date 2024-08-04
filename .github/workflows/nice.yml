@@ -4,14 +4,18 @@ jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/github-script@v7
+        env:
+          SHA: ${{ github.sha }}
         with:
           script: |
+            const {SHA} = process.env;
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `**Welcome**, new contributor!
-
-                Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
-            })
+            you can now use this "${SHA}" for ghcr images
+            Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
+            });
