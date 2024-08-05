@@ -1,21 +1,26 @@
 on: pull_request
+env:
+  TESTING_OCI_ARTIFICAT_TAG: "/pr-${{ github.event.issue.number }}"
+  # TESTING_OCI_ARTIFICAT_TAG: "/pr-${{ github.event.pull_request.number }}"
+  COMMIT_SHA: "${{ github.event.pull_request.head.sha }}"
 
 jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      # - uses: actions/checkout@v3
       - uses: actions/github-script@v7
-        env:
-          SHA: ${{ github.sha }}
         with:
           script: |
-            const {SHA} = process.env;
+            const {TESTING_OCI_ARTIFICAT_TAG,COMMIT_SHA} = process.env;
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `**Welcome**, new contributor!
-            you can now use this "${SHA}" for ghcr images
-            Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
-            });
+            \`\`\`shell
+            make build-installer CONTROLLER="application" CONTROLLER_IMG_SUFFIX="${TESTING_OCI_ARTIFICAT_TAG}" IMG_TAG_VERSION="${COMMIT_SHA}"
+            \`\`\`
+                Please make sure you've read our [contributing guide](CONTRIBUTING.md) and we look forward to reviewing your Pull request shortly ✨`
+            })
+
