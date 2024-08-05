@@ -1,6 +1,6 @@
 on: pull_request
 env:
-  TESTING_OCI_ARTIFICAT_TAG: "/pr-${{ github.event.issue.number }}"
+  TESTING_OCI_ARTIFICAT_TAG: "/pr-${{ github.event.pull_request.number }}"
   # TESTING_OCI_ARTIFICAT_TAG: "/pr-${{ github.event.pull_request.number }}"
   COMMIT_SHA: "${{ github.event.pull_request.head.sha }}"
 
