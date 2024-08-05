@@ -15,12 +15,18 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `**Note**, How to use it to do local testing
+              body: `## Steps on How to run testing
+            
+            > [!NOTE]
+            > Given below steps help you to run the e2e tests on the PRs latest changes
+            > using the latest built images.
+
+            > [!WARNING]
+            > These images are built for testing purposes only and should not be used in production.
+
             \`\`\`shell
             # first need to generate the application controller installer
             # make sure you don't push it to the PR
-            make build-installer CONTROLLER="application" IMG_SUFFIX="${TESTING_OCI_ARTIFICAT_TAG}" IMG_TAG_VERSION="${COMMIT_SHA}"
-            # now we can run the test suite
             make build-installer CONTROLLER="application" CUSTOM_LOCATION_GEN_CONTROLLER_MANIFEST="/tmp/ksctl-manifest.yaml" IMG_SUFFIX="${TESTING_OCI_ARTIFICAT_TAG}" IMG_TAG_VERSION="${COMMIT_SHA}"
             
             cd test/e2e
